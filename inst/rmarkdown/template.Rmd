@@ -25,6 +25,8 @@ title: `r glue::glue("{params$checkDataset$runnerSummary$registry} {format(as.Da
 ```{r echo = FALSE, results = "asis"}
 cat(paste0("**Registry:** ",params$checkDataset$runnerSummary$registry,"  \n"))
 cat(paste0("**Data pull date:** ",params$checkDataset$runnerSummary$pullDate,"  \n"))
+cat(paste0("**Current month data folder:** ",params$checkDataset$runnerSummary$dataFolderUrl,"  \n"))
+cat(paste0("**Last month data folder:** ",params$checkDataset$runnerSummary$lastMonthDataFolderUrl,"  \n"))
 cat(paste0("**User:** ",params$checkDataset$runnerSummary$user,"  \n"))
 cat(paste0("**Timestamp:** ",params$checkDataset$runnerSummary$timestamp,"  \n"))
 cat(paste0("**Output location:** ",params$checkDataset$runnerSummary$folderLoc,"  \n"))
