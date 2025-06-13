@@ -58,8 +58,8 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
     "criticalCheck5" = {
       cat(paste0("**Number Added Rows:** ", .criticalCheckResults$nAddedRows, "  \n"))
       cat(paste0("**Number of Old Rows:** ", .criticalCheckResults$nOldRows, "  \n"))
-      cat(paste0("**Percent of Row Increase:** ", sprintf("%0.1f%%", .criticalCheckResults$pctRowIncrease), "  \n"))
-      cat(paste0("**Comparison Threshold:** ", sprintf("%0.1f%%", 100 * .criticalCheckResults$threshold), "  \n"))
+      cat(paste0("**Percent of Row Increase:** ", .criticalCheckResults$pctRowIncrease, "  \n"))
+      cat(paste0("**Comparison Threshold:** ", .criticalCheckResults$threshold, "  \n"))
       cat(paste0("  \n"))
     },
     "criticalCheck6" = {
