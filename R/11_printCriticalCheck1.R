@@ -56,13 +56,18 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
       cat(paste0("  \n"))
     },
     "criticalCheck5" = {
-      cat(paste0("**Number Added Rows:** ", .criticalCheckResults$nAddedRows, "  \n"))
+      cat(paste0("**Number of Current Rows:** ", .criticalCheckResults$nRowsThisMonth, "  \n"))
       cat(paste0("**Number of Old Rows:** ", .criticalCheckResults$nOldRows, "  \n"))
+
+      cat(paste0("**Number Added Rows:** ", .criticalCheckResults$nAddedRows, "  \n"))
       cat(paste0("**Percent of Row Increase:** ", .criticalCheckResults$pctRowIncrease, "  \n"))
       cat(paste0("**Comparison Threshold:** ", .criticalCheckResults$threshold, "  \n"))
       cat(paste0("  \n"))
     },
     "criticalCheck6" = {
+      cat(paste0("**Number of Current Rows:** ", .criticalCheckResults$nRowsThisMonth, "  \n"))
+      cat(paste0("**Number of Old Rows:** ", .criticalCheckResults$nOldRows, "  \n"))
+
       cat(paste0("**Number of Removed Rows:** ", .criticalCheckResults$nRemovedRows, "  \n"))
       cat(paste0("**Comparison Threshold:** ", .criticalCheckResults$threshold, "  \n"))
       if(nrow(.criticalCheckResults$inOldAndNotInNew) > 0){
