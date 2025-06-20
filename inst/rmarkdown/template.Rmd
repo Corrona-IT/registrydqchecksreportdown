@@ -150,14 +150,17 @@ cat(paste0("# ", datasetName, "  \n\n"))
         }
 
         
-        
-        cat(paste0("Description: "
+        cat(paste0("**Description:** "
                    ,.currCheck$checkDescription
                    ,"  \n"))
-        cat(paste0("Pass: "
+        cat(paste0("**Send check to CDM/ROM:** "
+                   ,.currCheck$sendCheckToRom
+                   ,"  \n"))
+        cat("\n")
+        cat(paste0("**Pass:** "
                    ,.currCheck$pass
                    ,"  \n"))
-        cat(paste0("Number Failed: "
+        cat(paste0("**Number Failed:** "
                    ,.currCheck$values$n
                    ,"  \n"))
         cat("\n")
@@ -197,13 +200,17 @@ cat(paste0("# ", datasetName, "  \n\n"))
                            , "  \n"))
         }
                 
-                cat(paste0("Description: "
+                cat(paste0("**Description:** "
                            ,.currCheck$checkDescription
                            ,"  \n"))
-                cat(paste0("Pass: "
+                cat(paste0("**Send check to CDM/ROM:** "
+                           ,.currCheck$sendCheckToRom
+                           ,"  \n"))
+                cat("\n")
+                cat(paste0("**Pass:** "
                            ,.currCheck$pass
                            ,"  \n"))
-                cat(paste0("Number Failed: "
+                cat(paste0("**Number Failed:** "
                            ,.currCheck$values$n
                            ,"  \n"))
                 cat("\n")
@@ -246,8 +253,11 @@ cat(paste0("# ", datasetName, "  \n\n"))
                 }
             
 
-                cat(paste0("Description: "
+                cat(paste0("**Description:** "
                            ,.currCheck$checkDescription
+                           ,"  \n"))
+                cat(paste0("**Send check to CDM/ROM:** "
+                           ,.currCheck$sendCheckToRom
                            ,"  \n"))
                 cat("\n")
             
