@@ -1,6 +1,6 @@
 # generateReport(
-#   .inputDatasetUrl = "C:/Users/kreides/Documents/scrap/sample_dq_output/ad_2025-05-02_2025-06-13_0901_checks.rds"
-#   ,.reportOutputUrl = "C:/Users/kreides/Documents/scrap/sample_dq_output/"
+#   .inputDatasetUrl = "C:/Users/scott.kreider/Documents/scrap/sample_dq_output/ad_2025-05-02_2025-06-13_0901_checks.rds"
+#   ,.reportOutputUrl = "C:/Users/scott.kreider/Documents/scrap/sample_dq_output/"
 #   ,.fileName = "outputReport"
 # )
 #

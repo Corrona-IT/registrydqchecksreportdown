@@ -15,8 +15,17 @@ generateReport <- function(.inputDatasetUrl, .reportOutputUrl, .fileName){
   rmarkdown::render(system.file("rmarkdown", "template.Rmd", package = "registrydqchecksreportdown")
                     ,output_dir = .reportOutputUrl
                     ,output_file = glue::glue("{.fileName}.html")
-                    ,output_format = "html_document"
-                    ,params = list(checkDataset = .checkDataset))
+                    ,output_format = rmarkdown::html_document(
+                      toc = TRUE
+                      ,toc_float = TRUE
+                      ,toc_depth = 4
+                      ,includes = rmarkdown::includes(
+                        ,after_body = system.file("www/toc-collapse.js", package = "registrydqchecksreportdown")
+                      )
+                    )
+                    ,params = list(checkDataset = .checkDataset)
+                    # ,envir = new.env(parent = globalenv())
+                  )
 
   # Remove the intermediary file
   file.remove(glue::glue("{.reportOutputUrl}{.fileName}.md"))

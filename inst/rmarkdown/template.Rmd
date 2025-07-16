@@ -6,7 +6,9 @@ output:
     toc: true
     toc_float:
       collapsed: false
-    toc_depth: 2
+    toc_depth: 4
+    includes:
+      after_body: ../www/toc-collapse.js
 sansfont: Calibri Light
 params:
   checkDataset: NULL
@@ -134,14 +136,22 @@ cat(paste0("# ", datasetName, "  \n\n"))
         }
     
         if (grepl("^nc", .noncriticalCheckId)){
-              cat(paste0("###  Results of Non-Critical Check "
+              cat(paste0("###  "
+                   ,.noncriticalCheckId
+                   ," - ", .currCheck$checkShortDescription
+                   , "  \n"))
+              cat(paste0("Results of Non-Critical Check "
                    ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
                    ," ("
                    ,.currCheck$checkId
                    ,") - ", .currCheck$checkTitle
                    , "  \n"))
         } else if (grepl("^rc", .noncriticalCheckId)){
-              cat(paste0("###  Results of Registry Check "
+              cat(paste0("###  "
+                   ,.noncriticalCheckId
+                   ," - ", .currCheck$checkShortDescription
+                   , "  \n"))
+              cat(paste0("Results of Registry Check "
                    ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
                    ," ("
                    ,.currCheck$checkId
