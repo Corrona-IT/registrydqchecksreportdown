@@ -199,12 +199,20 @@ cat(paste0("# ", datasetName, "  \n\n"))
                 cat("\n")
             
         if (grepl("^nc", .noncriticalCheckId)){
-               cat(paste0("###  Results of Non-Critical Check "
+              cat(paste0("###  "
+                           ,.currCheck$checkId
+                           ," - ", .currCheck$checkShortDescription
+                           , "  \n"))
+               cat(paste0("Results of Non-Critical Check "
                            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
                            ," - ", .currCheck$checkTitle
                            , "  \n"))
         } else if (grepl("^rc", .noncriticalCheckId)){
-               cat(paste0("###  Results of Registry Check "
+                cat(paste0("###  "
+                           ,.currCheck$checkId
+                           ," - ", .currCheck$checkShortDescription
+                           , "  \n"))
+                cat(paste0("Results of Registry Check "
                            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
                            ," - ", .currCheck$checkTitle
                            , "  \n"))
@@ -251,12 +259,20 @@ cat(paste0("# ", datasetName, "  \n\n"))
                 cat("\n")
                 
                 if (grepl("^nc", .noncriticalCheckId)){
-                    cat(paste0("###  Results of Non-Critical Check "
+                  cat(paste0("###  "
+                           ,.currCheck$checkId
+                           ," - ", .currCheck$checkShortDescription
+                           , "  \n"))  
+                  cat(paste0("Results of Non-Critical Check "
                            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
                            ," - ", .currCheck$checkTitle
                            , "  \n"))
                 } else if (grepl("^rc", .noncriticalCheckId)){
-                    cat(paste0("###  Results of Registry Check "
+                    cat(paste0("###  "
+                           ,.currCheck$checkId
+                           ," - ", .currCheck$checkShortDescription
+                           , "  \n"))    
+                  cat(paste0("Results of Registry Check "
                            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
                            ," - ", .currCheck$checkTitle
                            , "  \n"))
