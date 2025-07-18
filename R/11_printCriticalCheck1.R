@@ -9,7 +9,8 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
 
   cat(paste0("******  \n"))
 
-  cat(paste0("### Results of Critical Check ", as.numeric(gsub("\\D", "", .criticalCheckId)), " - ", .criticalCheckResults$checkTitle , "  \n"))
+  cat(paste0("### ", toupper(.criticalCheckResults$checkId), " - ", .criticalCheckResults$checkShortDescription , "  \n"))
+  cat(paste0("<div style='font-size:24px; font-weight:bold;'>**Results of Critical Check ", as.numeric(gsub("\\D", "", .criticalCheckId)), " - ", .criticalCheckResults$checkTitle , "**</div>  \n"))
   cat(paste0("**Description:** ", .criticalCheckResults$checkDescription, "  \n"))
   cat(paste0("**Send check to CDM/ROM:** ",.criticalCheckResults$sendCheckToRom,"  \n"))
   cat(paste0("  \n"))

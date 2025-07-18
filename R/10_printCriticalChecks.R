@@ -4,6 +4,6 @@
 printCriticalChecks <- function(.criticalChecksToPrint){
   for(criticalCheckId in names(.criticalChecksToPrint)){
     printCriticalCheck(.criticalCheckId = criticalCheckId
-                       ,.criticalChecksToPrint[[criticalCheckId]])
+                       ,.criticalCheckResults = .criticalChecksToPrint[[criticalCheckId]])
   }
 }
