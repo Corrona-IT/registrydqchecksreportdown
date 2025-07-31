@@ -28,5 +28,5 @@ generateReport <- function(.inputDatasetUrl, .reportOutputUrl, .fileName){
                   )
 
   # Remove the intermediary file
-  file.remove(glue::glue("{.reportOutputUrl}{.fileName}.md"))
+  # file.remove(glue::glue("{.reportOutputUrl}{.fileName}.md"))
 }
