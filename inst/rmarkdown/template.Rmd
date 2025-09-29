@@ -370,7 +370,7 @@ for (datasetName in datasetNames) {
       cat("\n")
       
       # Pull the listing and remove extra vars
-      .listing_output <- .currCheck$listing %>%
+      .listing_output <- .currCheck$listing |>
         dplyr::select(-any_of(c("checkId", "report_subset_date")))
       
       if (!(.currCheck$values$n %in% c(0, NULL))) {

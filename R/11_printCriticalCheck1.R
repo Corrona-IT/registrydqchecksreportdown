@@ -67,9 +67,9 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
     },
     "criticalCheck6" = {
       cat(paste0("**Number of Current Rows:** ", .criticalCheckResults$nRowsThisMonth, "  \n"))
-      cat(paste0("**Number of Old Rows:** ", .criticalCheckResults$nOldRows, "  \n"))
+      cat(paste0("**Number of Old Rows:** ", .criticalCheckResults$nRowsLastMonth, "  \n"))
 
-      cat(paste0("**Number of Removed Rows:** ", .criticalCheckResults$nRemovedRows, "  \n"))
+      cat(paste0("**Number of Removed Rows:** ", .criticalCheckResults$textRemovedRows, "  \n"))
       cat(paste0("**Comparison Threshold:** ", .criticalCheckResults$threshold, "  \n"))
       if(nrow(.criticalCheckResults$inOldAndNotInNew) > 0){
         print(htmltools::tagList(DT::datatable(.criticalCheckResults$inOldAndNotInNew
@@ -79,6 +79,7 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
       cat(paste0("  \n"))
     },
     "criticalCheck7" = {
+      cat(paste0("**Number of Variables with Unexpected Missingness:** ", .criticalCheckResults$numberOfMissingVariables, "  \n"))
       if(!is.null(.criticalCheckResults)){
         if(nrow(.criticalCheckResults$essentialVariablesMissingness) > 0){
           print(htmltools::tagList(DT::datatable(.criticalCheckResults$essentialVariablesMissingness
@@ -90,6 +91,7 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
     },
     "criticalCheck8" = {
       if(!is.null(.criticalCheckResults)){
+        cat(paste0("**Number of Variables with Unexpected Missingness:** ", .criticalCheckResults$numberOfMissingVariables, "  \n"))
         if(nrow(.criticalCheckResults$essentialVariablesMissingness) > 0){
           .dsToPrint <- .criticalCheckResults$essentialVariablesMissingness |>
             dplyr::select(varName, nMissingThisMonth, nRowsThisMonth, pctMissingThisMonth, pctMissingLastMonth, acceptableMissingness, skipLogic)
@@ -115,6 +117,7 @@ printCriticalCheck <- function(.criticalCheckId, .criticalCheckResults){
     "criticalCheck10" = {
       if(!is.null(.criticalCheckResults)){
         cat(paste0("**Number Failed:** ", .criticalCheckResults$values$n, "  \n"))
+        cat(paste0("**Percent Failed:** ", 100 * .criticalCheckResults$values$pct, "  \n"))
         if(.criticalCheckResults$values$n > 0){
           .dsToPrint <- .criticalCheckResults$listing
           print(htmltools::tagList(DT::datatable(.dsToPrint
