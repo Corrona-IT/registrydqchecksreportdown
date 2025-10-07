@@ -26,45 +26,45 @@ title: `r glue::glue("{params$checkDataset$runnerSummary$registry} {format(as.Da
 
 ```{r echo = FALSE, results = "asis"}
 cat(paste0(
-  "**Registry:** "
-  ,params$checkDataset$runnerSummary$registry
-  ,"  \n"
+  "**Registry:** ",
+  params$checkDataset$runnerSummary$registry,
+  "  \n"
 ))
 
 cat(paste0(
-  "**Data pull date:** "
-  ,params$checkDataset$runnerSummary$pullDate
-  ,"  \n"
+  "**Data pull date:** ",
+  params$checkDataset$runnerSummary$pullDate,
+  "  \n"
 ))
 
 cat(paste0(
-    "**Current month data folder:** "
-    ,params$checkDataset$runnerSummary$dataFolderUrl
-    ,"  \n"
+  "**Current month data folder:** ",
+  params$checkDataset$runnerSummary$dataFolderUrl,
+  "  \n"
 ))
 
 cat(paste0(
-    "**Last month data folder:** "
-    ,params$checkDataset$runnerSummary$lastMonthDataFolderUrl
-    ,"  \n"
+  "**Last month data folder:** ",
+  params$checkDataset$runnerSummary$lastMonthDataFolderUrl,
+  "  \n"
 ))
 
 cat(paste0(
-    "**User:** "
-    ,params$checkDataset$runnerSummary$user
-    ,"  \n"
+  "**User:** ",
+  params$checkDataset$runnerSummary$user,
+  "  \n"
 ))
 
 cat(paste0(
-  "**Timestamp:** "
-  ,params$checkDataset$runnerSummary$timestamp
-  ,"  \n"
+  "**Timestamp:** ",
+  params$checkDataset$runnerSummary$timestamp,
+  "  \n"
 ))
 
 cat(paste0(
-  "**Output location:** "
-  ,params$checkDataset$runnerSummary$folderLoc
-  ,"  \n"
+  "**Output location:** ",
+  params$checkDataset$runnerSummary$folderLoc,
+  "  \n"
 ))
 ```
 
@@ -85,13 +85,16 @@ cat(paste0(
 
 ```{r echo = FALSE, results = "asis"}
 summaryToPrint <- params$checkDataset$checkSummary$criticalCheckSummary
-DT::datatable(summaryToPrint
-              ,options = list(dom = 'tp')
-              ,rownames = FALSE) |>
-  DT::formatStyle(names(summaryToPrint)[!(names(summaryToPrint) %in% c("cc2", "cc3"))]
-                  ,backgroundColor = DT::styleEqual(c("Fail", "Pass"), c("#FF7F7F", "#D1FFBD"))) |>
-  DT::formatStyle(names(summaryToPrint)[names(summaryToPrint) %in% c("cc2", "cc3")]
-                  ,backgroundColor = DT::styleInterval(0, c("#D1FFBD", "#FDFD96")))
+DT::datatable(summaryToPrint,
+  options = list(dom = "tp"),
+  rownames = FALSE
+) |>
+  DT::formatStyle(names(summaryToPrint)[!(names(summaryToPrint) %in% c("cc2", "cc3"))],
+    backgroundColor = DT::styleEqual(c("Fail", "Pass"), c("#FF7F7F", "#D1FFBD"))
+  ) |>
+  DT::formatStyle(names(summaryToPrint)[names(summaryToPrint) %in% c("cc2", "cc3")],
+    backgroundColor = DT::styleInterval(0, c("#D1FFBD", "#FDFD96"))
+  )
 
 cat(paste0("  \n\n"))
 ```
@@ -100,13 +103,12 @@ cat(paste0("  \n\n"))
 
 ```{r echo = FALSE, results = "asis"}
 DT::datatable(
-  params$checkDataset$checkSummary$nonCriticalCheckSummary
-  ,options = list(dom = 'tp')
-  ,rownames = FALSE
+  params$checkDataset$checkSummary$nonCriticalCheckSummary,
+  options = list(dom = "tp"),
+  rownames = FALSE
 )
 
 cat(paste0("  \n\n"))
-
 ```
 
 ```{r echo = FALSE, results = "asis", include = TRUE}
@@ -117,357 +119,352 @@ datasetNames <- names(params$checkDataset$criticalChecks)
 
 # Loop through each datasets
 for (datasetName in datasetNames) {
-  
   # Print dataset info
   cat(paste0("  \n\n"))
   cat(paste0("# ", datasetName, "  \n\n"))
-  
+
   # Begin summary section
   cat(paste0("## Summary", "  \n\n"))
-  
+
   # Begin critical check summary section
   cat(paste0("Critical Check Summary", "  \n\n"))
   cat(paste0("  \n\n"))
-  
+
   .summaryToPrint <- params$checkDataset$checkSummary$criticalCheckSummary |>
     dplyr::filter(dataset == datasetName)
-  
+
   print(htmltools::tagList(
     DT::datatable(
-      .summaryToPrint
-      ,options = list(dom = 'tp')
-      ,rownames = FALSE
+      .summaryToPrint,
+      options = list(dom = "tp"),
+      rownames = FALSE
     )
   ))
-  
+
   # Begin noncritical check summary section
   cat(paste0("Non-Critical Check Summary", "  \n\n"))
   cat(paste0("  \n\n"))
-  
+
   .summaryToPrint <- params$checkDataset$checkSummary$nonCriticalCheckSummary |>
     dplyr::filter(dataset == datasetName)
-  
+
   print(htmltools::tagList(
     DT::datatable(
-      .summaryToPrint
-      ,options = list(dom = 'tp')
-      ,rownames = FALSE
+      .summaryToPrint,
+      options = list(dom = "tp"),
+      rownames = FALSE
     )
   ))
-  
+
   cat(paste0("  \n\n"))
   cat(paste0("******  \n"))
-  
+
   # Begin critical check results section
   cat(paste0("## Critical Checks", "  \n\n"))
   printCriticalChecks(params$checkDataset$criticalChecks[[datasetName]])
-  
+
   cat(paste0("******  \n"))
-  
+
   # Begin noncritical check results section
   cat(paste0("## Non-Critical Checks", "  \n\n"))
-  
+
   cat("\n")
-  
+
   # Loop through and print any of the codebook NC checks
   for (.noncriticalCheckId in names(params$checkDataset$nonCriticalChecks[[datasetName]]$codebookChecks)) {
-    
     # Pull noncritical check result from list
     .currCheck <- params$checkDataset$nonCriticalChecks[[datasetName]]$codebookChecks[[.noncriticalCheckId]]
-    
+
     cat(paste0("******  \n"))
-    
+
     cat("\n")
-    
+
     # Pull info for nc3 separately than other checks
     if (.noncriticalCheckId == "nc3") {
-      
       .dsToPrint <- .currCheck$listing |>
         dplyr::select(
-          varName
-          ,nMissingThisMonth
-          ,nRowsThisMonth
-          ,pctMissingThisMonth
-          ,acceptableMissingness
-          ,skipLogic
+          varName,
+          nMissingThisMonth,
+          nRowsThisMonth,
+          pctMissingThisMonth,
+          acceptableMissingness,
+          skipLogic
         ) |>
         dplyr::select(-any_of(c("checkId", "report_subset_date")))
-      
-    # Pull info for nc4 separately than other checks
+
+      # Pull info for nc4 separately than other checks
     } else if (.noncriticalCheckId == "nc4") {
       .dsToPrint <- .currCheck$listing |>
         dplyr::select(
-          varName
-          ,nMissingThisMonth
-          ,nRowsThisMonth
-          ,pctMissingThisMonth
-          ,pctMissingLastMonth
-          ,acceptableMissingness
-          ,skipLogic
+          varName,
+          nMissingThisMonth,
+          nRowsThisMonth,
+          pctMissingThisMonth,
+          pctMissingLastMonth,
+          acceptableMissingness,
+          skipLogic
         ) |>
         dplyr::select(-any_of(c("checkId", "report_subset_date")))
-      
-    # Pull info for all other codebook checks which are the same
+
+      # Pull info for all other codebook checks which are the same
     } else {
-      
       .dsToPrint <- .currCheck$listing |>
         dplyr::select(-any_of(c("checkId", "report_subset_date")))
-      
     }
-    
+
     # Print codebook noncritical check results
     if (grepl("^nc", .noncriticalCheckId)) {
       cat(paste0(
-        "###  "
-        ,toupper(.noncriticalCheckId)
-        ," - "
-        ,.currCheck$checkShortDescription
-        ,"  \n"
+        "###  ",
+        toupper(.noncriticalCheckId),
+        " - ",
+        .currCheck$checkShortDescription,
+        "  \n"
       ))
-      
+
       cat(paste0(
-          "<div style='font-size:24px; font-weight:bold;'>**Results of Non-Critical Check "
-          ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
-          ," ("
-          ,.currCheck$checkId
-          ,") - "
-          ,.currCheck$checkTitle
-          ,"**</div>  \n"
+        "<div style='font-size:24px; font-weight:bold;'>**Results of Non-Critical Check ",
+        as.numeric(gsub("\\D", "", .noncriticalCheckId)),
+        " (",
+        .currCheck$checkId,
+        ") - ",
+        .currCheck$checkTitle,
+        "**</div>  \n"
       ))
-      
     } else if (grepl("^rc", .noncriticalCheckId)) {
       cat(paste0(
-        "###  "
-        ,toupper(.noncriticalCheckId)
-        ," - "
-        ,.currCheck$checkShortDescription
-        ,"  \n"
+        "###  ",
+        toupper(.noncriticalCheckId),
+        " - ",
+        .currCheck$checkShortDescription,
+        "  \n"
       ))
-      
+
       cat(paste0(
-          "<div style='font-size:24px; font-weight:bold;'>**Results of Registry Check "
-          ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
-          ," ("
-          ,.currCheck$checkId
-          ,") - "
-          ,.currCheck$checkTitle
-          ,"**</div>  \n"
+        "<div style='font-size:24px; font-weight:bold;'>**Results of Registry Check ",
+        as.numeric(gsub("\\D", "", .noncriticalCheckId)),
+        " (",
+        .currCheck$checkId,
+        ") - ",
+        .currCheck$checkTitle,
+        "**</div>  \n"
       ))
-      
     }
-    
-    
-    cat(paste0("**Description:** "
-               ,.currCheck$checkDescription
-               ,"  \n"))
-    
+
+
     cat(paste0(
-      "**Send check to CDM/ROM:** "
-      ,.currCheck$sendCheckToRom
-      ,"  \n"
+      "**Description:** ",
+      .currCheck$checkDescription,
+      "  \n"
     ))
-    
+
+    cat(paste0(
+      "**Send check to CDM/ROM:** ",
+      .currCheck$sendCheckToRom,
+      "  \n"
+    ))
+
     cat("\n")
-    
-    cat(paste0("**Pass:** "
-               ,.currCheck$pass
-               ,"  \n"))
-    
-    cat(paste0("**Number Failed:** "
-               ,.currCheck$values$n
-               ,"  \n"))
+
+    cat(paste0(
+      "**Pass:** ",
+      .currCheck$pass,
+      "  \n"
+    ))
+
+    cat(paste0(
+      "**Number Failed:** ",
+      .currCheck$values$n,
+      "  \n"
+    ))
     cat("\n")
-    
+
     if (!(.currCheck$values$n %in% c(0, NULL))) {
       print(htmltools::tagList(
         DT::datatable(
-          .dsToPrint
-          ,options = list(dom = 'tp')
-          ,rownames = FALSE
+          .dsToPrint,
+          options = list(dom = "tp"),
+          rownames = FALSE
         )
       ))
     }
-    
+
     cat("\n")
   }
-  
-  
-  
+
+
+
   # Loop through and print any of the manual NC checks nPctList output
   cat("\n")
-  
+
   # Check if there are any nPctList objects
   if (length(params$checkDataset$nonCriticalChecks[[datasetName]]$nPctList) > 0) {
-    
     # Loop through each nPctList object
     for (.noncriticalCheckId in names(params$checkDataset$nonCriticalChecks[[datasetName]]$nPctList)) {
-      
       # Pull the current check
       .currCheck <- params$checkDataset$nonCriticalChecks[[datasetName]]$nPctList[[.noncriticalCheckId]]
-      
+
       cat(paste0("******  \n"))
-      
+
       cat("\n")
-      
+
       if (grepl("^nc", .noncriticalCheckId)) {
-        
         cat(paste0(
-          "###  "
-          ,toupper(.noncriticalCheckId)
-          ," - "
-          ,.currCheck$checkShortDescription
-          ,"  \n"
+          "###  ",
+          toupper(.noncriticalCheckId),
+          " - ",
+          .currCheck$checkShortDescription,
+          "  \n"
         ))
-        
+
         cat(paste0(
-            "<div style='font-size:24px; font-weight:bold;'>**Results of Non-Critical Check "
-            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
-            ," - "
-            ,.currCheck$checkTitle
-            ,"**</div>  \n"
+          "<div style='font-size:24px; font-weight:bold;'>**Results of Non-Critical Check ",
+          as.numeric(gsub("\\D", "", .noncriticalCheckId)),
+          " - ",
+          .currCheck$checkTitle,
+          "**</div>  \n"
         ))
-        
       } else if (grepl("^rc", .noncriticalCheckId)) {
-        
         cat(paste0(
-          "###  "
-          ,toupper(.noncriticalCheckId)
-          ," - "
-          ,.currCheck$checkShortDescription
-          ,"  \n"
+          "###  ",
+          toupper(.noncriticalCheckId),
+          " - ",
+          .currCheck$checkShortDescription,
+          "  \n"
         ))
-        
+
         cat(paste0(
-            "<div style='font-size:24px; font-weight:bold;'>**Results of Registry Check "
-            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
-            ," - "
-            ,.currCheck$checkTitle
-            ,"**</div>  \n"
+          "<div style='font-size:24px; font-weight:bold;'>**Results of Registry Check ",
+          as.numeric(gsub("\\D", "", .noncriticalCheckId)),
+          " - ",
+          .currCheck$checkTitle,
+          "**</div>  \n"
         ))
-        
       }
-      
-      cat(paste0("**Description:** "
-                 ,.currCheck$checkDescription
-                 ,"  \n"))
-      
+
       cat(paste0(
-        "**Send check to CDM/ROM:** "
-        ,.currCheck$sendCheckToRom
-        ,"  \n"
+        "**Description:** ",
+        .currCheck$checkDescription,
+        "  \n"
       ))
-      
+
+      cat(paste0(
+        "**Send check to CDM/ROM:** ",
+        .currCheck$sendCheckToRom,
+        "  \n"
+      ))
+
       cat("\n")
-      
-      cat(paste0("**Pass:** "
-                 ,.currCheck$pass
-                 ,"  \n"))
-      
-      cat(paste0("**Number Failed:** "
-                 ,.currCheck$values$n
-                 ,"  \n"))
-      
+
+      cat(paste0(
+        "**Pass:** ",
+        .currCheck$pass,
+        "  \n"
+      ))
+
+      cat(paste0(
+        "**Number Failed:** ",
+        .currCheck$values$n,
+        "  \n"
+      ))
+
       cat("\n")
-      
+
       # Pull the listing and remove extra vars
       .listing_output <- .currCheck$listing %>%
         dplyr::select(-any_of(c("checkId", "report_subset_date")))
-      
+
       if (!(.currCheck$values$n %in% c(0, NULL))) {
         print(htmltools::tagList(DT::datatable(
-          head(.listing_output, n = 500)
-          ,options = list(dom = 'tp')
-          ,rownames = FALSE
+          head(.listing_output, n = 500),
+          options = list(dom = "tp"),
+          rownames = FALSE
         )))
-        
+
         if (.currCheck$values$n > 500) {
           cat(paste0(
-              "WARNING: There are more than 500 observations - please check the Excel listing for the full list\n\n"
+            "WARNING: There are more than 500 observations - please check the Excel listing for the full list\n\n"
           ))
         }
       }
-      
+
       cat("\n")
     }
   }
-  
-  
-  
+
+
+
   # Loop through and print any of the summaryStats output
   cat("\n")
-  
+
   # Check if any summaryStats exist
   if (length(params$checkDataset$nonCriticalChecks[[datasetName]]$summaryStats) > 0) {
-    
     # Loop through each summaryStat object
     for (.noncriticalCheckId in names(params$checkDataset$nonCriticalChecks[[datasetName]]$summaryStats)) {
-      
       .currCheck <- params$checkDataset$nonCriticalChecks[[datasetName]]$summaryStats[[.noncriticalCheckId]]
-      
+
       cat(paste0("******  \n"))
-      
+
       cat("\n")
-      
+
       if (grepl("^nc", .noncriticalCheckId)) {
-        
         cat(paste0(
-          "###  "
-          ,toupper(.noncriticalCheckId)
-          ," - "
-          ,.currCheck$checkShortDescription
-          ,"  \n"
+          "###  ",
+          toupper(.noncriticalCheckId),
+          " - ",
+          .currCheck$checkShortDescription,
+          "  \n"
         ))
-        
+
         cat(paste0(
-            "<div style='font-size:24px; font-weight:bold;'>**Results of Non-Critical Check "
-            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
-            ," - "
-            ,.currCheck$checkTitle
-            ,"**</div>  \n"
+          "<div style='font-size:24px; font-weight:bold;'>**Results of Non-Critical Check ",
+          as.numeric(gsub("\\D", "", .noncriticalCheckId)),
+          " - ",
+          .currCheck$checkTitle,
+          "**</div>  \n"
         ))
-        
       } else if (grepl("^rc", .noncriticalCheckId)) {
         cat(paste0(
-          "###  "
-          ,toupper(.noncriticalCheckId)
-          ," - "
-          ,.currCheck$checkShortDescription
-          ,"  \n"
+          "###  ",
+          toupper(.noncriticalCheckId),
+          " - ",
+          .currCheck$checkShortDescription,
+          "  \n"
         ))
-        
+
         cat(paste0(
-            "<div style='font-size:24px; font-weight:bold;'>**Results of Registry Check "
-            ,as.numeric(gsub("\\D", "", .noncriticalCheckId))
-            ," - "
-            ,.currCheck$checkTitle
-            ,"**</div>  \n"
+          "<div style='font-size:24px; font-weight:bold;'>**Results of Registry Check ",
+          as.numeric(gsub("\\D", "", .noncriticalCheckId)),
+          " - ",
+          .currCheck$checkTitle,
+          "**</div>  \n"
         ))
-        
       }
-      
-      
-      cat(paste0("**Description:** "
-                 ,.currCheck$checkDescription
-                 ,"  \n"))
-      
+
+
       cat(paste0(
-        "**Send check to CDM/ROM:** "
-        ,.currCheck$sendCheckToRom
-        ,"  \n"
+        "**Description:** ",
+        .currCheck$checkDescription,
+        "  \n"
       ))
-      
+
+      cat(paste0(
+        "**Send check to CDM/ROM:** ",
+        .currCheck$sendCheckToRom,
+        "  \n"
+      ))
+
       cat("\n")
-      
+
       print(htmltools::tagList(
         DT::datatable(
-          .currCheck$listing
-          ,options = list(dom = 'tp', pageLength = 1000)
-          ,rownames = FALSE
+          .currCheck$listing,
+          options = list(dom = "tp", pageLength = 1000),
+          rownames = FALSE
         )
       ))
       cat("\n")
     }
   }
-  
 }
 ```
